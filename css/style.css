@@ -1,0 +1,309 @@
+/*
+ *  Brad Baris, layout forked from PureCSS. 
+ */
+
+html {
+    text-size:100%;
+}
+
+body {
+    color: #333;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #1b98f8;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin: 1em 0;
+}
+
+h4 {
+    font-size: 1em;
+    margin: 1.33em 0;
+}
+
+h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+}
+
+h6 {
+    font-size: 0.67em;
+    font-weight: normal;
+    font-style: italic;
+    margin: 2.33em 0;
+}
+
+
+/* 
+ * -- MAIN LAYOUT BOXES 
+ */
+
+#layout, nav, #layout_email_list, #layout_email_content {
+    margin: 0;
+    padding: 0;
+}
+
+#layout div {
+    display: inline-block;    
+    zoom: 1;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    text-rendering: auto;
+}
+
+
+/* 
+ * -- Left Navbar Styling 
+ */
+
+nav {
+    width: 100%;
+    height: 10%;
+    display: block;
+    padding: 2em 0;    
+    position: relative;
+    background: rgb(37, 42, 58);
+    text-align: center;
+}
+
+nav div.menu {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding:2em;
+}
+
+nav div.menu a:hover,
+nav div.menu a:focus {
+    background: rgb(40, 60, 160);
+}
+
+nav div.menu a, {
+    color: #fff;
+    margin-left: 0.5em;
+}
+
+nav div.menu p {
+    color: #fff;
+}
+
+nav div.menu h4 {
+    color: #1b98f8;
+    font-weight: normal;
+}
+
+button {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    
+    color: #fff;
+    background: #ccc;
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    display: inline-block;
+    zoom: 1;
+    
+    box-shadow: none;
+    border-radius: 6px;
+    border: 1px solid #999;  /*IE 6/7/8*/
+    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/
+
+    font-family: Arial, sans-serif;
+    font-size: 100%;
+    line-height: normal;
+    white-space: nowrap;    
+    text-align: center;
+    vertical-align: baseline;
+
+}
+
+#inbox_button {
+    background: #1b98f8;
+
+}
+
+/* 
+ * -- Email Item-Listing Styles 
+ */
+
+.email_item {
+    padding: 0.9em 1em;
+    border-bottom: 1px solid #ddd;
+    border-left: 6px solid transparent;
+}
+
+.email_avatar {
+    border-radius: 3px;
+    margin-right: 0.5em;
+    width: 40x;
+    height: 40px;
+}
+
+.email_container {
+    width: 75%;
+}
+
+.email_sender,
+.email_subject {
+    margin: 0;
+}
+
+.email_sender {
+    text-transform: uppercase;
+    color: #999;
+}
+
+.email_date1 {
+    font-size: 90%;
+    margin: 0.4em 0;
+}
+.email_excerpt {
+    font-size: 80%;
+    margin: 0.4em 0;
+}
+
+.email_body {
+    visibility: hidden;
+    display: none;
+}
+
+/* 
+ * -- Email Main-Content Styles 
+ */
+
+.email_content_body {
+    width: auto;
+    margin: 2em;
+}
+    .email_content_header {
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+    }
+        .email_content_subject {
+            margin: 1em 0 0 1em;
+
+        }
+        .email_content_subtitle {
+            font-size: 1em;
+            margin-left: 2em;
+            font-weight: normal;
+        }
+            .email_content_subtitle span {
+                color: #999;
+            }
+    .email_content_controls {
+        margin-top: 2em;
+        display: inline;
+        text-align: center;
+        width: 100%;
+    }
+        .email_content_controls .nothing {
+            margin-bottom: 1.3em;
+
+        }
+
+
+.type {
+    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+}
+
+/*
+ * -- Tablet-ish Media Queries
+ */
+@media (min-width: 40em) {
+
+    /* Move the layout over so we can fit the nav + list in on the left */
+    #layout {
+        padding-left:500px; /* "left col (nav + list)" width */
+        position: relative;
+    }
+
+    /* These are position:fixed; elements that will be in the left 500px of the screen */
+    nav, #layout_email_list {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+    nav {
+        margin-left:-500px; /* "left col (nav + list)" width */
+        width:150px;
+        height: 100%;
+    }
+
+
+    #layout_email_list {
+        margin-left: -350px;
+        width: auto;
+        height: 33%;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #layout_email_content {
+        position: fixed;
+        top: 33%;
+        right: 0;
+        bottom: 0;
+        left: 150px;
+        overflow: auto;
+        width: auto; /* so that it's not 100% */
+    }
+
+}
+
+/*
+ * -- Desktop Media Queries
+ */
+@media (min-width: 60em) {
+
+    /* This will take up the entire height, and be a little thinner */
+    #layout_email_list{
+        margin-left: -350px;
+        width:350px;
+        height: 100%;
+        border-right: 1px solid #ddd;
+    }
+
+    /* This will now take up it's own column, so don't need position: fixed; */
+    #layout_email_content {
+        position: static;
+        margin: 0;
+        padding: 0;
+    }
+
+    .email_content_controls {
+        margin-top: 0em 2em 1em 0em;
+        display: inline;
+        text-align: right;
+        width: 30%;
+    }
+
+}
+
+
+
