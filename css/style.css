@@ -61,14 +61,13 @@ h6 {
 }
 
 #layout div {
-    display: inline-block;    
+    display: inline-block; /* hmm, need to refactor this elsewhere */
     zoom: 1;
     letter-spacing: normal;
     word-spacing: normal;
     vertical-align: top;
     text-rendering: auto;
 }
-
 
 /* 
  * -- Left Navbar Styling 
@@ -88,12 +87,7 @@ nav div.menu {
     background: transparent;
     border: none;
     text-align: left;
-    padding:2em;
-}
-
-nav div.menu a:hover,
-nav div.menu a:focus {
-    background: rgb(40, 60, 160);
+    padding: 0.25em 2em 0.25em;
 }
 
 nav div.menu a, {
@@ -144,8 +138,15 @@ button {
 
 #inbox_button {
     background: #1b98f8;
-
 }
+
+#inbox_button:hover, #inbox_button:focus {
+    background: #283ca0;
+}
+#inbox_button:active {
+	background: #f00;
+}
+
 
 /* 
  * -- Email Item-Listing Styles 
@@ -192,36 +193,49 @@ button {
     display: none;
 }
 
+#email_item_selected {
+	background: #e6f3f7;
+}
+
+.email_item_new {
+    border-left: 6px solid #1b98f8;
+}
+
+
+
 /* 
  * -- Email Main-Content Styles 
  */
 
 .email_content_body {
     width: auto;
-    margin: 2em;
+    margin: 2em;    
 }
     .email_content_header {
         width: 100%;
         border-bottom: 1px solid #ddd;
+        text-align: center;
     }
+    	.email_header {
+    		display:inline;
+    	}
         .email_content_subject {
-            margin: 1em 0 0 1em;
-
+            margin: 1em;
         }
         .email_content_subtitle {
             font-size: 1em;
-            margin-left: 2em;
+            margin: 1em;
             font-weight: normal;
         }
             .email_content_subtitle span {
                 color: #999;
             }
-    .email_content_controls {
-        margin-top: 2em;
-        display: inline;
-        text-align: center;
-        width: 100%;
-    }
+	    #layout_email_content div.email_content_controls {
+	    	display: block;
+	    	margin: 0 auto;
+	        text-align: center;
+	    }
+
         .email_content_controls .nothing {
             margin-bottom: 1.3em;
 
@@ -235,6 +249,7 @@ button {
 /*
  * -- Tablet-ish Media Queries
  */
+
 @media (min-width: 40em) {
 
     /* Move the layout over so we can fit the nav + list in on the left */
@@ -274,12 +289,15 @@ button {
         width: auto; /* so that it's not 100% */
     }
 
+
+
 }
 
 /*
  * -- Desktop Media Queries
  */
-@media (min-width: 60em) {
+
+@media (min-width: 57em) {
 
     /* This will take up the entire height, and be a little thinner */
     #layout_email_list{
@@ -296,13 +314,25 @@ button {
         padding: 0;
     }
 
-    .email_content_controls {
-        margin-top: 0em 2em 1em 0em;
-        display: inline;
+    #layout_email_content div.email_content_controls {
+    	display: block;
+    	margin: 1em 2em 0em 1em;
         text-align: right;
-        width: 30%;
     }
 
+	.email_header {
+    	width: 60%;
+    	text-align: left;
+    	float: left;
+    }
+
+    .email_content_subject {
+   		margin: 1em 0 0 1em;
+	}
+
+    .email_content_subtitle {
+	    margin-left: 2em;
+	}
 }
 
 

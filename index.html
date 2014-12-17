@@ -15,7 +15,6 @@
       window.onload = function() {
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
         // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-    
 
         for (var i = 0; i < window.geemails.length; i++) {
 
@@ -43,7 +42,7 @@
             var date1 = getDateFormatted(message.date);
 
         var EmailHTMLElement = document.createElement("div");
-            EmailHTMLElement.className = 'email_item type';
+            EmailHTMLElement.className = 'email_item type email_item_new';
 
         var AvatarContainer = document.createElement("div");
             AvatarContainer.className = 'email_avatar_box';
@@ -88,7 +87,7 @@
 
             EmailContainer.appendChild(excerptHTMLElement);
             
-            linkUpEmail(what, EmailContainer);  
+            linkUpEmail(what, EmailContainer);
             mainElement.appendChild(EmailHTMLElement);   
             updateEmailCount();
          
@@ -96,7 +95,15 @@
 
         function linkUpEmail(messagedata, linkTarget){
         
-            linkTarget.addEventListener('click', function() {     
+            linkTarget.addEventListener('click', function() {
+                
+                if (document.getElementById("email_item_selected") != null){
+                    document.getElementById("email_item_selected").removeAttribute("id");
+                }
+
+                linkTarget.parentNode.setAttribute("id", "email_item_selected"); 
+                linkTarget.parentNode.className = "email_item type";
+ 
                 document.getElementById('emailsubject').innerHTML = messagedata.subject;
                 document.getElementById('emailsender').innerHTML = messagedata.sender;
                 document.getElementById('emailtime').innerHTML = messagedata.date;
@@ -141,7 +148,6 @@
 
 	<!-- Navigation Menu, but since none, just a description area. -->
 	<nav>
-       <a href="#" class="menu_button"></a>
 
         <div class="menu_container">
 
@@ -150,8 +156,7 @@
         		<button id="inbox_button">Get Mail</button>
 				<h4>Count: <span id="emailCount"></span></h4>
 		        <p>
-
-		        	GeeMail project for DevLeague. Authored by Brad Baris.
+		        	GeeMail project for DevLeague.<br /> Authored by Brad Baris.
 		    	</p>
             	
             </div>
