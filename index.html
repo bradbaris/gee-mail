@@ -31,7 +31,7 @@
 
       } /*end onLoad */
        
-        function createEmailElement(what) {
+        function createEmailElement(what, newmail) {
         
             var mainElement = document.getElementById('layout_email_list');
             var message = what;
@@ -43,6 +43,7 @@
 
         var EmailHTMLElement = document.createElement("div");
             EmailHTMLElement.className = 'email_item type email_item_new';
+            EmailHTMLElement.setAttribute('visibility','hidden');
 
         var AvatarContainer = document.createElement("div");
             AvatarContainer.className = 'email_avatar_box';
@@ -87,8 +88,12 @@
 
             EmailContainer.appendChild(excerptHTMLElement);
             
+            if (newmail) {
+    	        EmailContainer.className += " slideDown";
+            }
+
             linkUpEmail(what, EmailContainer);
-            mainElement.appendChild(EmailHTMLElement);   
+            mainElement.insertBefore(EmailHTMLElement, mainElement.childNodes[0]);
             updateEmailCount();
          
         }
@@ -112,8 +117,7 @@
         }
 
         function publishNewEmail(){
-
-            createEmailElement(getNewMessage());
+            createEmailElement(getNewMessage(), 1);
         }
 
         function updateEmailCount(){
