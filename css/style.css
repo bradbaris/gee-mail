@@ -143,10 +143,10 @@ button {
 #inbox_button:hover, #inbox_button:focus {
     background: #283ca0;
 }
+
 #inbox_button:active {
 	background: #f00;
 }
-
 
 /* 
  * -- Email Item-Listing Styles 
@@ -292,7 +292,7 @@ button {
 }
 
 /*
- *  Animations
+ *  Animation
  */
 
 .slideDown{

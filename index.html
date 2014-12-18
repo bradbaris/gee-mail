@@ -95,6 +95,8 @@
             linkUpEmail(what, EmailContainer);
             mainElement.insertBefore(EmailHTMLElement, mainElement.childNodes[0]);
             updateEmailCount();
+            updateUnreadEmailCount();
+
          
         }
 
@@ -108,12 +110,15 @@
 
                 linkTarget.parentNode.setAttribute("id", "email_item_selected"); 
                 linkTarget.parentNode.className = "email_item type";
- 
+ 				
                 document.getElementById('emailsubject').innerHTML = messagedata.subject;
                 document.getElementById('emailsender').innerHTML = messagedata.sender;
                 document.getElementById('emailtime').innerHTML = messagedata.date;
                 document.getElementById('emailcontent').innerHTML = messagedata.body;
-            }, false); 
+                updateUnreadEmailCount();
+            }, false);
+
+             
         }
 
         function publishNewEmail(){
@@ -122,6 +127,10 @@
 
         function updateEmailCount(){
             document.getElementById('emailCount').innerHTML = document.querySelectorAll('.email_item').length;
+        }
+
+        function updateUnreadEmailCount(){
+            document.getElementById('UnreadEmailCount').innerHTML = document.querySelectorAll('.email_item_new').length;
         }
 
         function getDateFormatted(date){
@@ -158,7 +167,10 @@
             <div class="menu type">
      
         		<button id="inbox_button">Get Mail</button>
-				<h4>Count: <span id="emailCount"></span></h4>
+
+				<h4>Inbox (<span id="emailCount"></span>)</h4>
+				<h4>Unread (<span id="UnreadEmailCount"></span>)</h4>
+
 		        <p>
 		        	GeeMail project for DevLeague.<br /> Authored by Brad Baris.
 		    	</p>
