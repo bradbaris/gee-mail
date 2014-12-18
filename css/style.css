@@ -50,6 +50,9 @@ h6 {
     margin: 2.33em 0;
 }
 
+.type {
+    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+}
 
 /* 
  * -- MAIN LAYOUT BOXES 
@@ -241,9 +244,51 @@ button {
 
         }
 
+/*
+ *  Animation
+ */
 
-.type {
-    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+.slideDown{
+    animation-name: slideDown;
+    -webkit-animation-name: slideDown;  
+
+    animation-duration: 1s; 
+    -webkit-animation-duration: 1s;
+
+    animation-timing-function: ease;    
+    -webkit-animation-timing-function: ease;    
+
+    visibility: visible !important;                     
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-20%); opacity: 0;
+    }
+    50%{
+        transform: translateY(2%); opacity: 0.5;
+    }
+    80%{
+        transform: translateY(-2%); 
+    }           
+    100% {
+        transform: translateY(0%); opacity: 1;
+    }       
+}
+
+@-webkit-keyframes slideDown {
+    0% {
+        -webkit-transform: translateY(-20%); opacity: 0;
+    }
+    50%{
+        -webkit-transform: translateY(2%); opacity: 0.5;
+    }
+    80%{
+        -webkit-transform: translateY(-2%); 
+    }           
+    100% {
+        -webkit-transform: translateY(0%); opacity: 1;
+    }   
 }
 
 /*
@@ -289,53 +334,6 @@ button {
         width: auto; /* so that it's not 100% */
     }
 
-}
-
-/*
- *  Animation
- */
-
-.slideDown{
-    animation-name: slideDown;
-    -webkit-animation-name: slideDown;  
-
-    animation-duration: 1s; 
-    -webkit-animation-duration: 1s;
-
-    animation-timing-function: ease;    
-    -webkit-animation-timing-function: ease;    
-
-    visibility: visible !important;                     
-}
-
-@keyframes slideDown {
-    0% {
-        transform: translateY(-100%); opacity: 0;
-    }
-    50%{
-        transform: translateY(4%); opacity: 0.5;
-    }
-    80%{
-        transform: translateY(-2%); 
-    }           
-    100% {
-        transform: translateY(0%); opacity: 1;
-    }       
-}
-
-@-webkit-keyframes slideDown {
-    0% {
-        -webkit-transform: translateY(-100%); opacity: 0;
-    }
-    50%{
-        -webkit-transform: translateY(4%); opacity: 0.5;
-    }
-    80%{
-        -webkit-transform: translateY(-2%); 
-    }           
-    100% {
-        -webkit-transform: translateY(0%); opacity: 1;
-    }   
 }
 
 /*
