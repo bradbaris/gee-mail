@@ -1,18 +1,288 @@
-<html>
-	<head>
-		<script src="js/mail-generator.js"></script>
-		<link href="css/style.css" rel="stylesheet" media="screen">
-    <script>
-      window.onload = function(){
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Brad Baris">
+
+    <title>DevLeague Coding Challenge: GeeMail</title>
+
+<link rel="stylesheet" href="css/style.css" media="screen"> 
+<script src="js/mail-generator.js"></script>
+
+<script>
+      window.onload = function() {
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
         // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
         
-      };
-    </script>
-	</head>
-	<body>
-		<div class="container" id="main">
-			Build Me!
+        for (var i = 0; i < window.geemails.length; i++) {
+
+        	var what = window.geemails[i];
+        	createEmailElement(what);
+        }            
+            document.getElementById('inbox_button').addEventListener('click', publishNewEmail, false);
+            setInterval(function(){ publishNewEmail(); }, 5000);
+
+            /* init placeholder date */
+            document.getElementById('emailtime').innerHTML = new Date();
+
+      } /*end onLoad */
+       
+        function createEmailElement(what, newmail) {
+        
+            var mainElement = document.getElementById('layout_email_list');
+            var message = what;
+            var sender = message.sender;
+            var subject = message.subject;
+            var body = message.body;
+            var excerpt1 = getEmailExcerpt(body);
+            var date1 = getDateFormatted(message.date);
+
+        var EmailHTMLElement = document.createElement("div");
+            EmailHTMLElement.className = 'email_item type email_item_new';
+            EmailHTMLElement.setAttribute('visibility','hidden');
+
+        var AvatarContainer = document.createElement("div");
+            AvatarContainer.className = 'email_avatar_box';
+            EmailHTMLElement.appendChild(AvatarContainer);
+
+        var AvatarHTMLElement = document.createElement("img");
+            AvatarHTMLElement.src = 'img/avatar.png'; /*lol hardcoded*/
+            AvatarHTMLElement.className = 'email_avatar';
+            AvatarContainer.appendChild(AvatarHTMLElement);
+
+        var EmailContainer = document.createElement("div");
+            EmailContainer.className = 'email_container';
+            EmailHTMLElement.appendChild(EmailContainer);
+
+        var senderHTMLElement = document.createElement("h5");
+            senderHTMLElement.innerHTML = sender;
+            senderHTMLElement.className = 'email_sender';
+
+            EmailContainer.appendChild(senderHTMLElement);
+
+        var subjectHTMLElement = document.createElement("h4");
+            subjectHTMLElement.innerHTML = subject;
+            subjectHTMLElement.className = 'email_subject';
+
+            EmailContainer.appendChild(subjectHTMLElement);
+
+        var dateHTMLElement = document.createElement("h6");
+            dateHTMLElement.innerHTML = date1; 
+            dateHTMLElement.className = 'email_date1';
+
+            EmailContainer.appendChild(dateHTMLElement);
+
+        var bodyHTMLElement = document.createElement("span");
+            bodyHTMLElement.innerHTML = body;
+            bodyHTMLElement.className = 'email_body';
+
+            EmailContainer.appendChild(bodyHTMLElement);
+      
+        var excerptHTMLElement = document.createElement("div");
+            excerptHTMLElement.innerHTML = excerpt1;
+            excerptHTMLElement.className = 'email_excerpt';
+
+            EmailContainer.appendChild(excerptHTMLElement);
+            
+            if (newmail) {
+    	        EmailContainer.className += " slideDown";
+            }
+
+            linkUpEmail(what, EmailContainer);
+            mainElement.insertBefore(EmailHTMLElement, mainElement.childNodes[0]);
+            updateEmailCount();
+            updateUnreadEmailCount();
+       
+        }
+
+        function linkUpEmail(messagedata, linkTarget){
+        
+            linkTarget.addEventListener('click', function() {
+                
+                prevEmailSelectClear();
+                linkTarget.parentNode.setAttribute("id", "email_item_selected"); 
+                displayEmail(messagedata);
+
+            }, false);
+             
+        }
+
+        function displayEmail(messagedata) {
+
+            if (!messagedata) {
+                var messagedata = {};
+                messagedata.sender = document.getElementById("email_item_selected").children[1].children[0].textContent;
+                messagedata.subject = document.getElementById("email_item_selected").children[1].children[1].textContent;
+                messagedata.date = document.getElementById("email_item_selected").children[1].children[2].textContent;        
+                messagedata.body = document.getElementById("email_item_selected").children[1].children[3].textContent;
+            } 
+
+            document.getElementById('emailsubject').innerHTML = messagedata.subject;
+            document.getElementById('emailsender').innerHTML = messagedata.sender;
+            document.getElementById('emailtime').innerHTML = messagedata.date;
+            document.getElementById('emailcontent').innerHTML = messagedata.body;
+    
+            document.getElementById("email_item_selected").className = "email_item type";
+            updateUnreadEmailCount();
+
+        }
+
+        function prevEmailSelectClear() {
+            if (document.getElementById("email_item_selected") == null) {
+            
+                // uhh a little overlap with the keydown logic but oh well
+
+            } else { document.getElementById("email_item_selected").removeAttribute("id"); }
+        }
+
+        function publishNewEmail(){
+            createEmailElement(getNewMessage(), 1);
+        }
+
+        function updateEmailCount(){
+            document.getElementById('emailCount').innerHTML = document.querySelectorAll('.email_item').length;
+        }
+
+        function updateUnreadEmailCount(){
+            document.getElementById('UnreadEmailCount').innerHTML = document.querySelectorAll('.email_item_new').length;
+        }
+
+        function getDateFormatted(date){
+            var dd = date.toDateString(); 
+            var dt = date.toTimeString(); 
+            date = dd + "<br />" + dt;
+            return date;
+        }
+
+        function getEmailExcerpt(bodyCopy){
+            var excerpt = bodyCopy.toString();
+            var excerptArray = {};
+            var excerptArray = excerpt.split(" ");
+            if (excerptArray.length > 20){
+                excerptArray = excerptArray.slice(0, 20);
+                excerpt = excerptArray.join(" ") + "…";
+            }
+            return excerpt;
+        }
+
+        document.onkeydown = function(e) {
+            var mainElement = document.getElementById('layout_email_list');
+
+            e = e || window.event;
+            switch(e.which || e.keyCode) {
+                case 37: // LEFT arrow
+                //nothing implemented yet
+                break;
+
+                case 38: // UP arrow
+                if (document.getElementById("email_item_selected") == null){
+                    mainElement.firstChild.setAttribute("id", "email_item_selected");
+                } else {
+                    try {
+                        var prevElem = document.getElementById("email_item_selected").previousSibling;
+                        document.getElementById("email_item_selected").removeAttribute("id");
+                        prevElem.setAttribute("id", "email_item_selected");
+                        displayEmail();                
+
+                    } catch(error) { console.log("FIRST ITEM BRUH"); }
+                }
+                break;
+
+                case 39: // RIGHT arrow
+                //nothing implemented yet
+                break;
+
+                case 40: // DOWN arrow
+                if (document.getElementById("email_item_selected") == null){
+                    mainElement.firstChild.setAttribute("id", "email_item_selected"); 
+                } else {
+                    try {
+                        document.getElementById("email_item_selected").nextElementSibling.setAttribute("id", "email_item_selected");                
+                        document.getElementById("email_item_selected").removeAttribute("id");
+                        displayEmail();
+ 
+                    } catch(error) {
+                        console.log("LAST ITEM BRUH");    
+                    }
+                }
+                break;
+
+                default: return; // exit this handler for other keys
+            }
+
+            e.preventDefault(); // prevent the default action (scroll / move caret)
+        }            
+
+        
+</script>
+
+</head>
+<body>
+
+<div id="layout">
+
+	<!-- Navigation Menu, but since none, just a description area. -->
+	<nav>
+
+        <div class="menu_container">
+
+            <div class="menu type">
+     
+        		<button id="inbox_button">Get Mail</button>
+
+				<h4>Inbox (<span id="emailCount"></span>)</h4>
+				<h4>Unread (<span id="UnreadEmailCount"></span>)</h4>
+
+		        <p>
+		        	GeeMail project for DevLeague.<br /> Authored by Brad Baris.
+		    	</p>
+            	
+            </div>
+        </div>	
+	</nav>
+
+	<div id="layout_email_list">
+            <!-- Begin Email Listing Looooooop -->
+	</div>
+
+	<!-- Selected Email Contents -->
+	<div id="layout_email_content">
+
+	            <div class="email_content_header type">
+	                <div class="email_header">
+                        <h1 id="emailsubject" class="email_content_subject">Welcome to GeeMail</h1>
+                        <p class="email_content_subtitle">
+                            From <a id="emailsender">Brad Baris</a> at <span id="emailtime"></span>
+                        </p>
+                    </div>
+
+                    <div class="email_content_controls">
+                        <button class="nothing">Reply</button>
+                        <button class="nothing">Forward</button>
+                        <button class="nothing">Move to</button>
+                    </div>    
+	            </div>
+
+	            <div id="emailcontent" class="email_content_body type">
+	                <p>
+	                    <b>Starfish Prime</b> was a high-altitude nuclear test conducted by the United States on July 9, 1962, a joint effort of the Atomic Energy Commission (AEC) and the Defense Atomic Support Agency (which became the Defense Nuclear Agency in 1971).
+                    </p>
+                    <p>    
+                        Launched via a Thor rocket and carrying a W49 thermonuclear warhead (manufactured by Los Alamos Scientific Laboratory) and a Mk. 2 reentry vehicle, the explosion took place 250 miles (400 km) above a point 19 miles (31 km) southwest of Johnston Island in the Pacific Ocean. It was one of five tests conducted by the USA in outer space as defined by the Fédération Aéronautique Internationale (FAI). It produced a yield equivalent to 1.4 megatonnes of TNT.
+	                </p>
+                    <p>
+                        Starfish Prime caused an electromagnetic pulse (EMP) which was far larger than expected, so much larger that it drove much of the instrumentation off scale, causing great difficulty in getting accurate measurements. The Starfish Prime electromagnetic pulse also made those effects known to the public by causing electrical damage in Hawaii, about 1,445 kilometres (898 mi) away from the detonation point, knocking out about 300 streetlights, setting off numerous burglar alarms and damaging a telephone company microwave link. The EMP damage to the microwave link shut down telephone calls from Kauai to the other Hawaiian islands.
+                    </p>
+                    <p>
+                        After the Starfish Prime detonation, bright auroras were observed in the detonation area as well as in the southern conjugate region on the other side of the equator from the detonation. According to U.S. atomic veteran Cecil R. Coale, some hotels in Hawaii offered "rainbow bomb" parties on their roofs for Starfish Prime, contradicting some reports that the artificial aurora was unexpected.
+                    </p>
+	            </div>
+	        </div>
 		</div>
-	</body>
+
+</div>
+
+</body>
 </html>

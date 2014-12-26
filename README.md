@@ -1,8 +1,10 @@
-# GeeMail 
+# Brad GeeMail 
 
-GeeMail is a coding exercise meant to simulate an e-mail web application inbox.
+Brad Baris 'GeeMail Project' for DevLeague.
 
 ## Description
+
+GeeMail is a coding exercise meant to simulate an e-mail web application inbox.
 
 With this coding challenge you will be creating a simulation of a little known current e-mail web application you may or may not have heard of.
 
